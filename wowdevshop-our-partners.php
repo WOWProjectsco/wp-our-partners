@@ -17,6 +17,9 @@
 */
 
 
+//
+// Register Custom Partner Post Type
+//
 add_action('init', 'wds_create_partner_post_type');
 
 // Register custom post type  | Partners
@@ -87,5 +90,77 @@ function wds_create_partner_taxonomies() {
 }
 
 
+
+//
+// Add Custom Data Fields to the add/edit post page
+//
+add_action('add_meta_boxes', 'add_partner_fields');
+
+// Add the Meta Box
+function add_partner_fields() {
+    add_meta_box(
+        'partner_fields', // $id
+        'Partner Fields', // $title
+        'show_partner_fields', // $callback
+        'partner', // $page
+        'normal', // $context
+        'high'); // $priority
+}
+
+// Field Array
+$prefix = 'custom_';
+$custom_meta_fields = array(
+    array(
+        'label'=> 'Description',
+        'desc'  => 'A description of the parnter.',
+        'id'    => $prefix.'textarea',
+        'type'  => 'textarea'
+    ),
+    array(
+        'label'=> 'Website',
+        'desc'  => '',
+        'id'    => $prefix.'text',
+        'type'  => 'text'
+    ),
+    array(
+        'label'=> 'Email',
+        'desc'  => '',
+        'id'    => $prefix.'text',
+        'type'  => 'text'
+    )
+);
+
+// The Callback
+function show_partner_fields() {
+global $custom_meta_fields, $post;
+// Use nonce for verification
+wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
+
+    // Begin the field table and loop
+    echo '<table class="form-table">';
+    foreach ($custom_meta_fields as $field) {
+        // get value of this field if it exists for this post
+        $meta = get_post_meta($post->ID, $field['id'], true);
+        // begin a table row with
+        echo '<tr>
+                <th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
+                <td>';
+                switch($field['type']) {
+                    // case items will go here
+                    // text
+                    case 'text':
+                        echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
+                            <br /><span class="description">'.$field['desc'].'</span>';
+                    break;
+                    // textarea
+                    case 'textarea':
+                        echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea>
+                            <br /><span class="description">'.$field['desc'].'</span>';
+                    break;
+                } //end switch
+        echo '</td></tr>';
+    } // end foreach
+    echo '</table>'; // end table
+}
 
 ?>
