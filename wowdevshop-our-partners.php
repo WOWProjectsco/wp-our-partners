@@ -43,6 +43,7 @@ function wds_create_partner_post_type() {
         'labels' => $labels,
         'public' => true,
         'publicly_queryable' => true,
+        'taxonomies' => array('partner-category' ),
         'show_ui' => true,
         'query_var' => true,
         'menu_icon' => 'dashicons-nametag',
@@ -83,6 +84,7 @@ function wds_create_partner_taxonomies() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
+        'public'            => true,
         'rewrite'           => array( 'slug' => 'partner-category' ),
     );
 
@@ -113,19 +115,19 @@ $custom_meta_fields = array(
     array(
         'label'=> 'Description',
         'desc'  => 'A description of the parnter.',
-        'id'    => $prefix.'textarea',
+        'id'    => $prefix.'description',
         'type'  => 'textarea'
     ),
     array(
         'label'=> 'Website',
         'desc'  => '',
-        'id'    => $prefix.'text',
+        'id'    => $prefix.'website',
         'type'  => 'text'
     ),
     array(
         'label'=> 'Email',
         'desc'  => '',
-        'id'    => $prefix.'text',
+        'id'    => $prefix.'email',
         'type'  => 'text'
     )
 );
@@ -196,5 +198,37 @@ function save_custom_meta($post_id) {
         }
     } // end foreach
 }
+
+
+
+//
+// Customize the columnts display
+//
+//
+add_action("manage_posts_custom_column", "partner_custom_columns");
+add_filter("manage_partner_posts_columns", "partner_columns");
+
+function partner_columns($columns) //this function display the columns headings
+{
+    $columns = array(
+        "cb" => '<input type="checkbox" />',
+        "title" => "Investment Title",
+        "description" => "Description",
+        "website" => "Website",
+        "date" => "Date"
+    );
+    return $columns;
+}
+
+function partner_custom_columns($column)
+{
+    global $post;
+    if ("ID" == $column) echo $post->ID; //displays title
+    elseif ("description" == $column) echo '<a href="">'.$post->custom_description.'</a>'; //displays the description
+    elseif ("website" == $column) echo $post->custom_website; //shows up the post website.
+}
+
+
+
 
 ?>
