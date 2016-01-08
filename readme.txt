@@ -18,7 +18,7 @@ This plugin registers the 'partner' post type, it let's you manage your company 
 
 = Support =
 
-Looking for a helping hand? [View plugin documentation](http://http://docs.wowdevshop.com/index.php?title=Wordpress/our-partners).
+Looking for a helping hand? [View plugin documentation](http://docs.wowdevshop.com/wordpress/our-partners).
 
 = Get Involved =
 
