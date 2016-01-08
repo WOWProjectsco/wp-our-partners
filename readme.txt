@@ -75,9 +75,9 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 1. The organization partner management screen within the WordPress admin.
 
-2. The organization partners displayed on the front-end with a little CSS.
+2. The organization partners options on the settings menu.
 
-3. Single organization partner displayed on the front-end with a little CSS.
+3. The organization partners posted.
 
 == Changelog ==
 
