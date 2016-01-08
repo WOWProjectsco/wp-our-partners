@@ -17,10 +17,10 @@
 */
 
 
-add_action('init', 'wds_our_partners_register');
+add_action('init', 'wds_create_partner_post_type');
 
 // Register custom post type  | Partners
-function wds_our_partners_register() {
+function wds_create_partner_post_type() {
 
     $labels = array(
         'name' => _x('Partners', 'post type general name'),
@@ -50,7 +50,42 @@ function wds_our_partners_register() {
         'supports' => array('title','thumbnail')
       );
 
-    register_post_type( 'partners' , $args );
+    register_post_type( 'partner' , $args );
 }
+
+
+// hook into the init action and call create_partner_taxonomies when it fires
+add_action( 'init', 'wds_create_partner_taxonomies', 0 );
+
+// Create own taxonomies for the post type "partner"
+function wds_create_partner_taxonomies() {
+    //Add new taxonomy, make it hierarchical (like categories)
+    $labels = array(
+        'name'              => _x( 'Partner Categories', 'taxonomy general name' ),
+        'singular_name'     => _x( 'Partner Category', 'taxonomy singular name' ),
+        'search_items'      => __( 'Search Categories' ),
+        'all_items'         => __( 'All Categories' ),
+        'parent_item'       => __( 'Parent Category' ),
+        'parent_item_colon' => __( 'Parent Category:' ),
+        'edit_item'         => __( 'Edit Category' ),
+        'update_item'       => __( 'Update Category' ),
+        'add_new_item'      => __( 'Add New Category' ),
+        'new_item_name'     => __( 'New Category Name' ),
+        'menu_name'         => __( 'Partner Category' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'partner-category' ),
+    );
+
+    register_taxonomy( 'partner-category', array( 'partner' ), $args );
+}
+
+
 
 ?>
