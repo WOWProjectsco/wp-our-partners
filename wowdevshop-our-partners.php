@@ -20,10 +20,10 @@
 //
 // Register Custom Partner Post Type
 //
-add_action('init', 'wds_create_partner_post_type');
+add_action('init', 'wds_op_create_post_type');
 
 // Register custom post type  | Partners
-function wds_create_partner_post_type() {
+function wds_op_create_post_type() {
 
     $labels = array(
         'name' => _x('Partners', 'post type general name'),
@@ -59,10 +59,10 @@ function wds_create_partner_post_type() {
 
 
 // hook into the init action and call create_partner_taxonomies when it fires
-add_action( 'init', 'wds_create_partner_taxonomies', 0 );
+add_action( 'init', 'wds_op_create_custom_taxonomy', 0 );
 
 // Create own taxonomies for the post type "partner"
-function wds_create_partner_taxonomies() {
+function wds_op_create_custom_taxonomy() {
     //Add new taxonomy, make it hierarchical (like categories)
     $labels = array(
         'name'              => _x( 'Partner Categories', 'taxonomy general name' ),
@@ -96,14 +96,14 @@ function wds_create_partner_taxonomies() {
 //
 // Add Custom Data Fields to the add/edit post page
 //
-add_action('add_meta_boxes', 'add_partner_fields');
+add_action('add_meta_boxes', 'wds_op_add_fields');
 
 // Add the Meta Box
-function add_partner_fields() {
+function wds_op_add_fields() {
     add_meta_box(
         'partner_fields', // $id
         'Partner Fields', // $title
-        'show_partner_fields', // $callback
+        'wds_op_show_fields', // $callback
         'partner', // $page
         'normal', // $context
         'high'); // $priority
@@ -122,18 +122,18 @@ $custom_meta_fields = array(
         'label'=> 'Website',
         'desc'  => '',
         'id'    => $prefix.'website',
-        'type'  => 'text'
+        'type'  => 'url'
     ),
     array(
         'label'=> 'Email',
         'desc'  => '',
         'id'    => $prefix.'email',
-        'type'  => 'text'
+        'type'  => 'email'
     )
 );
 
 // The Callback
-function show_partner_fields() {
+function wds_op_show_fields() {
 global $custom_meta_fields, $post;
 // Use nonce for verification
 wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
@@ -149,14 +149,19 @@ wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
                 <td>';
                 switch($field['type']) {
                     // case items will go here
-                    // text
-                    case 'text':
-                        echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
-                            <br /><span class="description">'.$field['desc'].'</span>';
-                    break;
                     // textarea
                     case 'textarea':
-                        echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea>
+                        echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.esc_textarea($meta).'</textarea>
+                            <br /><span class="description">'.$field['desc'].'</span>';
+                    break;
+                    // url
+                    case 'url':
+                        echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.esc_url($meta).'" size="30" />
+                            <br /><span class="description">'.$field['desc'].'</span>';
+                    break;
+                    // email
+                    case 'email':
+                        echo '<input type="email" name="'.$field['id'].'" id="'.$field['id'].'" value="'.esc_textarea($meta).'" size="30" />
                             <br /><span class="description">'.$field['desc'].'</span>';
                     break;
                 } //end switch
@@ -168,9 +173,9 @@ wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
 //
 // Save the Data
 //
-add_action('save_post', 'save_custom_meta');
+add_action('save_post', 'wds_op_save_custom_meta');
 
-function save_custom_meta($post_id) {
+function wds_op_save_custom_meta($post_id) {
     global $custom_meta_fields;
 
     // verify nonce
@@ -188,14 +193,48 @@ function save_custom_meta($post_id) {
     }
 
     // loop through fields and save the data
+    //
     foreach ($custom_meta_fields as $field) {
-        $old = get_post_meta($post_id, $field['id'], true);
-        $new = $_POST[$field['id']];
-        if ($new && $new != $old) {
-            update_post_meta($post_id, $field['id'], $new);
-        } elseif ('' == $new && $old) {
-            delete_post_meta($post_id, $field['id'], $old);
+
+        switch ($field['id']) {
+            case 'custom_description':
+                $old = get_post_meta($post_id, $field['id'], true);
+                $new = sanitize_text_field($_POST[$field['id']]);
+                if ($new && $new != $old) {
+                    update_post_meta($post_id, $field['id'], $new);
+                } elseif ('' == $new && $old) {
+                    delete_post_meta($post_id, $field['id'], $old);
+                }
+                break;
+            case 'custom_website':
+                $old = get_post_meta($post_id, $field['id'], true);
+                $new = esc_url($_POST[$field['id']]);
+                if ($new && $new != $old) {
+                    update_post_meta($post_id, $field['id'], $new);
+                } elseif ('' == $new && $old) {
+                    delete_post_meta($post_id, $field['id'], $old);
+                }
+                break;
+            case 'custom_email':
+                $old = get_post_meta($post_id, $field['id'], true);
+                $new = sanitize_email($_POST[ $field['id']]);
+                if ($new && $new != $old) {
+                    update_post_meta($post_id, $field['id'], $new);
+                } elseif ('' == $new && $old) {
+                    delete_post_meta($post_id, $field['id'], $old);
+                }
+                break;
+            default:
+                $old = get_post_meta($post_id, $field['id'], true);
+                $new = sanitize_text_field($_POST[$field['id']]);
+                if ($new && $new != $old) {
+                    update_post_meta($post_id, $field['id'], $new);
+                } elseif ('' == $new && $old) {
+                    delete_post_meta($post_id, $field['id'], $old);
+                }
+                break;
         }
+
     } // end foreach
 }
 
@@ -205,10 +244,10 @@ function save_custom_meta($post_id) {
 // Customize the columnts display
 //
 //
-add_action("manage_posts_custom_column", "partner_custom_columns");
-add_filter("manage_partner_posts_columns", "partner_columns");
+add_action("manage_posts_custom_column", "wds_op_custom_columns");
+add_filter("manage_partner_posts_columns", "wds_op_columns");
 
-function partner_columns($columns) //this function display the columns headings
+function wds_op_columns($columns) //this function display the columns headings
 {
     $columns = array(
         "cb" => '<input type="checkbox" />',
@@ -220,7 +259,7 @@ function partner_columns($columns) //this function display the columns headings
     return $columns;
 }
 
-function partner_custom_columns($column)
+function wds_op_custom_columns($column)
 {
     global $post;
     if ("ID" == $column) echo $post->ID; //displays title
