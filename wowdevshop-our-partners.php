@@ -26,8 +26,8 @@ add_action('init', 'wds_op_create_post_type');
 function wds_op_create_post_type() {
 
     $labels = array(
-        'name' => _x('Partners', 'post type general name'),
-        'singular_name' => _x('Partner', 'post type singular name'),
+        'name' => _x('Partners', 'Partners', 'partners'),
+        'singular_name' => _x('Partner', 'Partner', 'partner'),
         'add_new' => _x('Add New', 'partner'),
         'add_new_item' => __('Add New Partner'),
         'edit_item' => __('Edit Partner'),
@@ -36,7 +36,8 @@ function wds_op_create_post_type() {
         'search_items' => __('Search Partner'),
         'not_found' =>  __('Nothing found'),
         'not_found_in_trash' => __('Nothing found in Trash'),
-        'parent_item_colon' => ''
+        'parent_item_colon' => '',
+        'archives' => __('Partner Archives', 'partners')
     );
 
     $args = array(
@@ -51,7 +52,8 @@ function wds_op_create_post_type() {
         'capability_type' => 'post',
         'hierarchical' => false,
         'menu_position' => 7,
-        'supports' => array('title','thumbnail')
+        'supports' => array('title','thumbnail'),
+        'has_archive' => true
       );
 
     register_post_type( 'partner' , $args );
@@ -65,8 +67,8 @@ add_action( 'init', 'wds_op_create_custom_taxonomy', 0 );
 function wds_op_create_custom_taxonomy() {
     //Add new taxonomy, make it hierarchical (like categories)
     $labels = array(
-        'name'              => _x( 'Partner Categories', 'taxonomy general name' ),
-        'singular_name'     => _x( 'Partner Category', 'taxonomy singular name' ),
+        'name'              => _x( 'Partner Categories', 'Partner Categories', 'partner-categories' ),
+        'singular_name'     => _x( 'Partner Category', 'Partner Category', 'partner-category' ),
         'search_items'      => __( 'Search Categories' ),
         'all_items'         => __( 'All Categories' ),
         'parent_item'       => __( 'Parent Category' ),
