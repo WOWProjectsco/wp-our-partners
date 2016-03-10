@@ -50,7 +50,7 @@ function wds_op_create_post_type() {
         'menu_icon' => 'dashicons-nametag',
         'rewrite' => true,
         'capability_type' => 'post',
-        'hierarchical' => false,
+        'hierarchical' => true,
         'menu_position' => 7,
         'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom_fields', 'page_attributes'),
         'has_archive' => true
@@ -95,6 +95,20 @@ function wds_op_create_custom_taxonomy() {
 
 
 
+function wds_op_change_title_text( $title ){
+     $screen = get_current_screen();
+
+     if  ( 'partner' == $screen->post_type ) {
+          $title = 'Enter partner name';
+     }
+
+     return $title;
+}
+
+add_filter( 'enter_title_here', 'wds_op_change_title_text' );
+
+
+
 //
 // Add Custom Data Fields to the add/edit post page
 //
@@ -114,12 +128,6 @@ function wds_op_add_fields() {
 // Field Array
 $prefix = 'custom_';
 $custom_meta_fields = array(
-    array(
-        'label'=> 'Description',
-        'desc'  => 'A description of the parnter.',
-        'id'    => $prefix.'description',
-        'type'  => 'textarea'
-    ),
     array(
         'label'=> 'Website',
         'desc'  => '',
@@ -151,11 +159,6 @@ wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
                 <td>';
                 switch($field['type']) {
                     // case items will go here
-                    // textarea
-                    case 'textarea':
-                        echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.esc_textarea($meta).'</textarea>
-                            <br /><span class="description">'.$field['desc'].'</span>';
-                    break;
                     // url
                     case 'url':
                         echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.esc_url($meta).'" size="30" />
@@ -199,15 +202,6 @@ function wds_op_save_custom_meta($post_id) {
     foreach ($custom_meta_fields as $field) {
 
         switch ($field['id']) {
-            case 'custom_description':
-                $old = get_post_meta($post_id, $field['id'], true);
-                $new = sanitize_text_field($_POST[$field['id']]);
-                if ($new && $new != $old) {
-                    update_post_meta($post_id, $field['id'], $new);
-                } elseif ('' == $new && $old) {
-                    delete_post_meta($post_id, $field['id'], $old);
-                }
-                break;
             case 'custom_website':
                 $old = get_post_meta($post_id, $field['id'], true);
                 $new = esc_url($_POST[$field['id']]);
@@ -254,7 +248,6 @@ function wds_op_columns($columns) //this function display the columns headings
     $columns = array(
         "cb" => '<input type="checkbox" />',
         "title" => "Name",
-        "description" => "Description",
         "website" => "Website",
         "date" => "Date"
     );
@@ -265,7 +258,6 @@ function wds_op_custom_columns($column)
 {
     global $post;
     if ("ID" == $column) echo $post->ID; //displays title
-    elseif ("description" == $column) echo '<a href="">'.$post->custom_description.'</a>'; //displays the description
     elseif ("website" == $column) echo $post->custom_website; //shows up the post website.
 }
 
