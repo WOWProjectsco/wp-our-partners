@@ -17,6 +17,19 @@
 */
 
 
+/*
+|--------------------------------------------------------------------------
+| CONSTANTS
+|--------------------------------------------------------------------------
+*/
+if ( ! defined( 'RC_TC_BASE_FILE' ) )
+    define( 'RC_TC_BASE_FILE', __FILE__ );
+if ( ! defined( 'RC_TC_BASE_DIR' ) )
+    define( 'RC_TC_BASE_DIR', dirname( RC_TC_BASE_FILE ) );
+if ( ! defined( 'RC_TC_PLUGIN_URL' ) )
+    define( 'RC_TC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+
 //
 // Register Custom Partner Post Type
 //
@@ -293,8 +306,42 @@ function wds_op_template_chooser($template) {
 
     // Else use custom template
     if ( is_single() ){
-        return wds_op_get_template_hierarchi('single');
+        return wds_op_get_template_hierarchy('single');
+    }
+
+    if ( is_archive()) {
+        return wds_op_get_template_hierarchy('archive');
     }
 }
+
+/**
+ * Get the custom template if is set
+ *
+ * @since 1.1.0
+ */
+function wds_op_get_template_hierarchy($template) {
+
+    // Get the template slug
+    $template_slug = rtrim( $template, '.php' );
+    $template = $template_slug . '.php';
+
+    // Check if a custom template exists in the theme folder, if not, load the plugin template file
+    if ( $theme_file = locate_template( array( 'plugin_template/' . $template ) ) ) {
+        $file = $theme_file;
+    }
+    else {
+        $file = RC_TC_BASE_DIR . '/includes/templates/' . $template;
+    }
+
+    return apply_filters( 'rc_repl_template_' . $template, $file );
+}
+
+/*
+|--------------------------------------------------------------------------
+| FILTERS
+|--------------------------------------------------------------------------
+*/
+
+add_filter( 'template_include', 'wds_op_template_chooser' );
 
 ?>
