@@ -5,7 +5,7 @@
 * Plugin URI: http://wowdevshop.com
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.0.0
+* Version: 1.1.0
 * License: GPLv2
 * Author URI: http://wowdevshop.com
 * Text Domain: our-partners-by-wowdevshop
@@ -52,7 +52,7 @@ function wds_op_create_post_type() {
         'capability_type' => 'post',
         'hierarchical' => false,
         'menu_position' => 7,
-        'supports' => array('title','thumbnail'),
+        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom_fields', 'page_attributes'),
         'has_archive' => true
       );
 
@@ -253,7 +253,7 @@ function wds_op_columns($columns) //this function display the columns headings
 {
     $columns = array(
         "cb" => '<input type="checkbox" />',
-        "title" => "Investment Title",
+        "title" => "Name",
         "description" => "Description",
         "website" => "Website",
         "date" => "Date"
@@ -270,6 +270,39 @@ function wds_op_custom_columns($column)
 }
 
 
+/*
+|---------------------------------------------------------------------------
+| FILTERS
+|---------------------------------------------------------------------------
+ */
 
+add_filter('templage_include','partner_template_chooser');
+
+
+/*
+|---------------------------------------------------------------------------
+| PLUGING FUNCTIONS
+|---------------------------------------------------------------------------
+ */
+
+/**
+ * Returns template file
+ *
+ * @since 1.1.0
+ */
+function wds_op_template_chooser($template) {
+    // Post ID
+    $post_id = get_the_ID();
+
+    //For all other CPT
+    if (get_post_type($post_id) != 'partner') {
+        return $template;
+    }
+
+    // Else use custom template
+    if ( is_single() ){
+        return wds_op_get_template_hierarchi('single');
+    }
+}
 
 ?>
