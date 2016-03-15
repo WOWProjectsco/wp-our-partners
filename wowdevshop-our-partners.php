@@ -22,12 +22,7 @@
 | CONSTANTS
 |--------------------------------------------------------------------------
 */
-if ( ! defined( 'RC_TC_BASE_FILE' ) )
-    define( 'RC_TC_BASE_FILE', __FILE__ );
-if ( ! defined( 'RC_TC_BASE_DIR' ) )
-    define( 'RC_TC_BASE_DIR', dirname( RC_TC_BASE_FILE ) );
-if ( ! defined( 'RC_TC_PLUGIN_URL' ) )
-    define( 'RC_TC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
 
 
 //
@@ -63,7 +58,7 @@ function wds_op_create_post_type() {
         'menu_icon' => 'dashicons-nametag',
         'rewrite' => true,
         'capability_type' => 'post',
-        'hierarchical' => true,
+        'hierarchical' => false,
         'menu_position' => 7,
         'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom_fields', 'page_attributes'),
         'has_archive' => true
@@ -275,73 +270,38 @@ function wds_op_custom_columns($column)
 }
 
 
-/*
-|---------------------------------------------------------------------------
-| FILTERS
-|---------------------------------------------------------------------------
- */
-
-add_filter('templage_include','partner_template_chooser');
 
 
-/*
-|---------------------------------------------------------------------------
-| PLUGING FUNCTIONS
-|---------------------------------------------------------------------------
- */
+
 
 /**
- * Returns template file
  *
- * @since 1.1.0
  */
-function wds_op_template_chooser($template) {
-    // Post ID
-    $post_id = get_the_ID();
 
-    //For all other CPT
-    if (get_post_type($post_id) != 'partner') {
-        return $template;
-    }
+add_filter( 'template_include', 'include_template_function', 1 );
 
-    // Else use custom template
-    if ( is_single() ){
-        return wds_op_get_template_hierarchy('single');
+function include_template_function( $template_path ) {
+    if ( get_post_type() == 'partner' ) {
+        if ( is_single() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/templates/single-partner.php';
+            }
+        }
     }
-
-    if ( is_archive()) {
-        return wds_op_get_template_hierarchy('archive');
+    if ( get_post_type() == 'partner' ) {
+        if ( is_archive() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/templates/archive-partner.php';
+            }
+        }
     }
+    return $template_path;
 }
-
-/**
- * Get the custom template if is set
- *
- * @since 1.1.0
- */
-function wds_op_get_template_hierarchy($template) {
-
-    // Get the template slug
-    $template_slug = rtrim( $template, '.php' );
-    $template = $template_slug . '.php';
-
-    // Check if a custom template exists in the theme folder, if not, load the plugin template file
-    if ( $theme_file = locate_template( array( 'plugin_template/' . $template ) ) ) {
-        $file = $theme_file;
-    }
-    else {
-        $file = RC_TC_BASE_DIR . '/includes/templates/' . $template;
-    }
-
-    return apply_filters( 'rc_repl_template_' . $template, $file );
-}
-
-/*
-|--------------------------------------------------------------------------
-| FILTERS
-|--------------------------------------------------------------------------
-*/
-
-add_filter( 'template_include', 'wds_op_template_chooser' );
-
-?>
