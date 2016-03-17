@@ -23,62 +23,20 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header><!-- .page-header -->
-
+	<div class="widget widget_wowdevshop_our_partners">
+		<div class="partners component partner_columns">
 			<?php
 			// Start the Loop.
-			while ( have_posts() ) : the_post(); ?>
+			while ( have_posts() ) : the_post();
 
-				<article id="partner-<?php the_ID(); ?>" <?php post_class(); ?>>
-					<header class="entry-header">
-						<?php if ( is_sticky() && is_home() && ! is_paged() ) : ?>
-							<span class="sticky-post"><?php _e( 'Featured'); ?></span>
-						<?php endif; ?>
+				get_template_part( 'template-parts/content', get_post_format() );
 
-						<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-					</header><!-- .entry-header -->
-
-					<?php the_excerpt(); ?>
-
-					<?php the_post_thumbnail(); ?>
-
-					<div class="entry-content">
-						<?php
-							/* translators: %s: Name of current post */
-							the_content( sprintf(
-								__( 'Continue reading<span class="screen-reader-text"> "%s"</span>'),
-								get_the_title()
-							) );
-
-							wp_link_pages( array(
-								'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:') . '</span>',
-								'after'       => '</div>',
-								'link_before' => '<span>',
-								'link_after'  => '</span>',
-								'pagelink'    => '<span class="screen-reader-text">' . __( 'Page' ) . ' </span>%',
-								'separator'   => '<span class="screen-reader-text">, </span>',
-							) );
-						?>
-					</div><!-- .entry-content -->
-
-					<footer class="entry-footer">
-						<?php
-							edit_post_link(
-								sprintf(
-									/* translators: %s: Name of current post */
-									__( 'Edit<span class="screen-reader-text"> "%s"</span>'),
-									get_the_title()
-								),
-								'<span class="edit-link">',
-								'</span>'
-							);
-						?>
-					</footer><!-- .entry-footer -->
-				</article><!-- #post-## -->
-
-
-		<?php
 			// End the loop.
-			endwhile;
+			endwhile; ?>
+		</div>
+		</div>
+
+			<?php
 
 			// Previous/next page navigation.
 			the_posts_pagination( array(

@@ -46,7 +46,7 @@ get_header(); ?>
                         edit_post_link(
                             sprintf(
                                 /* translators: %s: Name of current post */
-                                __( 'Edit<span class="screen-reader-text"> "%s"</span>'),
+                                __( 'Edit<span class="screen-reader-text"> "%s"</span>' ),
                                 get_the_title()
                             ),
                             '<span class="edit-link">',
