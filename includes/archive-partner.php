@@ -23,17 +23,17 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header><!-- .page-header -->
-	<div class="widget widget_wowdevshop_our_partners">
-		<div class="partners component partner_columns">
-			<?php
-			// Start the Loop.
-			while ( have_posts() ) : the_post();
+		<div class="widget widget_wowdevshop_our_partners">
+			<div class="partners component partner_columns">
+				<?php
+				// Start the Loop.
+				while ( have_posts() ) : the_post();
 
-				get_template_part( 'template-parts/content', get_post_format() );
+					include( 'templates/content-archive.php');
 
-			// End the loop.
-			endwhile; ?>
-		</div>
+				// End the loop.
+				endwhile; ?>
+			</div>
 		</div>
 
 			<?php
@@ -45,15 +45,14 @@ get_header(); ?>
 				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page') . ' </span>',
 			) );
 
-		// If no content, include the "No posts found" template.
-		else :
-			get_template_part( 'template-parts/content', 'none' );
+			// If no content, include the "No posts found" template.
+			else :
+				get_template_part( 'template-parts/content', 'none' );
 
-		endif;
-		?>
+			endif;
+			?>
 
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

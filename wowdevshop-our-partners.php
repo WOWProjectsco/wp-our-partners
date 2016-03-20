@@ -288,7 +288,7 @@ function include_template_function( $template_path ) {
             if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
                 $template_path = $theme_file;
             } else {
-                $template_path = plugin_dir_path( __FILE__ ) . '/includes/templates/single-partner.php';
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/single-partner.php';
             }
         }
     }
@@ -299,7 +299,7 @@ function include_template_function( $template_path ) {
             if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
                 $template_path = $theme_file;
             } else {
-                $template_path = plugin_dir_path( __FILE__ ) . '/includes/templates/archive-partner.php';
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/archive-partner.php';
             }
         }
     }
