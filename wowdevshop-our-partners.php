@@ -5,7 +5,7 @@
 * Plugin URI: http://wowdevshop.com
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.1.0
+* Version: 1.2.0
 * License: GPLv2
 * Author URI: http://wowdevshop.com
 * Text Domain: our-partners-by-wowdevshop
@@ -29,18 +29,18 @@ add_action('init', 'wds_op_create_post_type');
 function wds_op_create_post_type() {
 
     $labels = array(
-        'name' => _x('Partners', 'Partners', 'partners'),
-        'singular_name' => _x('Partner', 'Partner', 'partner'),
-        'add_new' => _x('Add New', 'partner'),
-        'add_new_item' => __('Add New Partner'),
-        'edit_item' => __('Edit Partner'),
-        'new_item' => __('New Partner'),
-        'view_item' => __('View Partner'),
-        'search_items' => __('Search Partner'),
-        'not_found' =>  __('Nothing found'),
-        'not_found_in_trash' => __('Nothing found in Trash'),
+        'name'              => __('Partners', 'our-partners-by-wowdevshop'),
+        'singular_name'     => __('Partner', 'our-partners-by-wowdevshop'),
+        'add_new'           => __('Add New', 'our-partners-by-wowdevshop'),
+        'add_new_item'      => __('Add New Partner', 'our-partners-by-wowdevshop'),
+        'edit_item'         => __('Edit Partner', 'our-partners-by-wowdevshop'),
+        'new_item'          => __('New Partner', 'our-partners-by-wowdevshop'),
+        'view_item'         => __('View Partner', 'our-partners-by-wowdevshop'),
+        'search_items'      => __('Search Partner', 'our-partners-by-wowdevshop'),
+        'not_found'         =>  __('Nothing found', 'our-partners-by-wowdevshop'),
+        'not_found_in_trash' => __('Nothing found in Trash', 'our-partners-by-wowdevshop'),
         'parent_item_colon' => '',
-        'archives' => __('Partner Archives', 'partners')
+        'archives'          => __('Partner Archives', 'our-partners-by-wowdevshop')
     );
 
     $args = array(
@@ -70,17 +70,17 @@ add_action( 'init', 'wds_op_create_custom_taxonomy', 0 );
 function wds_op_create_custom_taxonomy() {
     //Add new taxonomy, make it hierarchical (like categories)
     $labels = array(
-        'name'              => _x( 'Partner Categories', 'Partner Categories', 'partner-categories' ),
-        'singular_name'     => _x( 'Partner Category', 'Partner Category', 'partner-category' ),
-        'search_items'      => __( 'Search Categories' ),
-        'all_items'         => __( 'All Categories' ),
-        'parent_item'       => __( 'Parent Category' ),
-        'parent_item_colon' => __( 'Parent Category:' ),
-        'edit_item'         => __( 'Edit Category' ),
-        'update_item'       => __( 'Update Category' ),
-        'add_new_item'      => __( 'Add New Category' ),
-        'new_item_name'     => __( 'New Category Name' ),
-        'menu_name'         => __( 'Partner Category' ),
+        'name'              => __( 'Partner Categories', 'our-partners-by-wowdevshop'),
+        'singular_name'     => __( 'Partner Category', 'our-partners-by-wowdevshop' ),
+        'search_items'      => __( 'Search Categories', 'our-partners-by-wowdevshop' ),
+        'all_items'         => __( 'All Categories', 'our-partners-by-wowdevshop' ),
+        'parent_item'       => __( 'Parent Category', 'our-partners-by-wowdevshop' ),
+        'parent_item_colon' => __( 'Parent Category:', 'our-partners-by-wowdevshop' ),
+        'edit_item'         => __( 'Edit Category', 'our-partners-by-wowdevshop' ),
+        'update_item'       => __( 'Update Category', 'our-partners-by-wowdevshop' ),
+        'add_new_item'      => __( 'Add New Category', 'our-partners-by-wowdevshop' ),
+        'new_item_name'     => __( 'New Category Name', 'our-partners-by-wowdevshop' ),
+        'menu_name'         => __( 'Partner Category', 'our-partners-by-wowdevshop' ),
     );
 
     $args = array(
@@ -102,7 +102,7 @@ function wds_op_change_title_text( $title ){
      $screen = get_current_screen();
 
      if  ( 'partner' == $screen->post_type ) {
-          $title = 'Enter partner name';
+          $title = __('Enter partner name', 'our-partners-by-wowdevshop');
      }
 
      return $title;
@@ -121,7 +121,7 @@ add_action('add_meta_boxes', 'wds_op_add_fields');
 function wds_op_add_fields() {
     add_meta_box(
         'partner_fields', // $id
-        'Partner Fields', // $title
+        __('Partner Fields', 'our-partners-by-wowdevshop'), // $title
         'wds_op_show_fields', // $callback
         'partner', // $page
         'normal', // $context
@@ -132,13 +132,13 @@ function wds_op_add_fields() {
 $prefix = 'custom_';
 $custom_meta_fields = array(
     array(
-        'label'=> 'Website',
+        'label' => __('Website', 'our-partners-by-wowdevshop'),
         'desc'  => '',
         'id'    => $prefix.'website',
         'type'  => 'url'
     ),
     array(
-        'label'=> 'Email',
+        'label' => __('Email', 'our-partners-by-wowdevshop'),
         'desc'  => '',
         'id'    => $prefix.'email',
         'type'  => 'email'
@@ -236,34 +236,6 @@ function wds_op_save_custom_meta($post_id) {
 
     } // end foreach
 }
-
-
-
-//
-// Customize the columnts display
-//
-//
-add_action("manage_posts_custom_column", "wds_op_custom_columns");
-add_filter("manage_partner_posts_columns", "wds_op_columns");
-
-function wds_op_columns($columns) //this function display the columns headings
-{
-    $columns = array(
-        "cb" => '<input type="checkbox" />',
-        "title" => "Name",
-        "website" => "Website",
-        "date" => "Date"
-    );
-    return $columns;
-}
-
-function wds_op_custom_columns($column)
-{
-    global $post;
-    if ("ID" == $column) echo $post->ID; //displays title
-    elseif ("website" == $column) echo $post->custom_website; //shows up the post website.
-}
-
 
 
 

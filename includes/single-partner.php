@@ -30,22 +30,21 @@ get_header(); ?>
                         $custom_website = get_post_meta($post->ID, 'custom_website', true);
                         $custom_email = get_post_meta($post->ID, 'custom_email', true);
                         if($custom_website):
-                    ?>
-                            <span>Website: <a href="<?php echo $custom_website; ?>" target="_blank"><?php echo $custom_website; ?></a></span><br>
-                        <?php
+                            echo "<span>" . __('Website:',  'our-partners-by-wowdevshop') . " <a href='" . $custom_website . "' target='_blank'>" . $custom_website . "</a></span><br>";
                         endif;
-                        if($custom_email) : ?>
-                            <span>Email: <a href="<?php echo 'mailto:' . $custom_email; ?>" target="_blank"><?php echo $custom_email; ?></a></span><br>
-                        <?php endif; ?>
+                        if($custom_email) :
+
+                            echo "<span>" . __('Email:', 'our-partners-by-wowdevshop') . " <a href='mailto:" . $custom_email. "' target='_blank'>" . $custom_email . "</a></span><br>";
+                        endif; ?>
                         </div>
 
                         <?php
                         wp_link_pages( array(
-                            'before'      => '<div class="page-links"><span class="page-links-title">' . 'Pages:' . '</span>',
+                            'before'      => '<div class="page-links"><span class="page-links-title">' . __('Pages:', 'our-partners-by-wowdevshop') . '</span>',
                             'after'       => '</div>',
                             'link_before' => '<span>',
                             'link_after'  => '</span>',
-                            'pagelink'    => '<span class="screen-reader-text">' . 'Page' . ' </span>%',
+                            'pagelink'    => '<span class="screen-reader-text">' . __('Page', 'our-partners-by-wowdevshop') . ' </span>%',
                             'separator'   => '<span class="screen-reader-text">, </span>',
                         ) );
 
@@ -80,16 +79,16 @@ get_header(); ?>
             if ( is_singular( 'attachment' ) ) {
                 // Parent post navigation.
                 the_post_navigation( array(
-                    'prev_text' => _x( '<span class="meta-nav">Published in</span><span class="post-title">%title</span>', 'Parent post link', 'twentysixteen' ),
+                    'prev_text' => _x( '<span class="meta-nav">Published in</span><span class="post-title">%title</span>', 'Parent post link', 'our-partners-by-wowdevshop' ),
                 ) );
             } elseif ( is_singular( 'partner' ) ) {
                 // Previous/next post navigation.
                 the_post_navigation( array(
-                    'next_text' => '<span class="meta-nav" aria-hidden="true">' . 'Next' . '</span> ' .
-                        '<span class="screen-reader-text">' . 'Next post:' . '</span> ' .
+                    'next_text' => '<span class="meta-nav" aria-hidden="true">' . __('Next', 'our-partners-by-wowdevshop') . '</span> ' .
+                        '<span class="screen-reader-text">' . __('Next post:', 'our-partners-by-wowdevshop') . '</span> ' .
                         '<span class="post-title">%title</span>',
-                    'prev_text' => '<span class="meta-nav" aria-hidden="true">' . 'Previous' . '</span> ' .
-                        '<span class="screen-reader-text">' . 'Previous post:' . '</span> ' .
+                    'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __('Previous', 'our-partners-by-wowdevshop') . '</span> ' .
+                        '<span class="screen-reader-text">' . __('Previous post:', 'our-partners-by-wowdevshop') . '</span> ' .
                         '<span class="post-title">%title</span>',
                 ) );
             }
