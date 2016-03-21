@@ -5,7 +5,7 @@
 * Plugin URI: http://wowdevshop.com
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.0.0
+* Version: 1.1.0
 * License: GPLv2
 * Author URI: http://wowdevshop.com
 * Text Domain: our-partners-by-wowdevshop
@@ -17,6 +17,9 @@
 */
 
 
+require_once( 'pagetemplater.php' );
+
+
 //
 // Register Custom Partner Post Type
 //
@@ -26,8 +29,8 @@ add_action('init', 'wds_op_create_post_type');
 function wds_op_create_post_type() {
 
     $labels = array(
-        'name' => _x('Partners', 'post type general name'),
-        'singular_name' => _x('Partner', 'post type singular name'),
+        'name' => _x('Partners', 'Partners', 'partners'),
+        'singular_name' => _x('Partner', 'Partner', 'partner'),
         'add_new' => _x('Add New', 'partner'),
         'add_new_item' => __('Add New Partner'),
         'edit_item' => __('Edit Partner'),
@@ -36,7 +39,8 @@ function wds_op_create_post_type() {
         'search_items' => __('Search Partner'),
         'not_found' =>  __('Nothing found'),
         'not_found_in_trash' => __('Nothing found in Trash'),
-        'parent_item_colon' => ''
+        'parent_item_colon' => '',
+        'archives' => __('Partner Archives', 'partners')
     );
 
     $args = array(
@@ -49,9 +53,10 @@ function wds_op_create_post_type() {
         'menu_icon' => 'dashicons-nametag',
         'rewrite' => true,
         'capability_type' => 'post',
-        'hierarchical' => false,
+        'hierarchical' => true,
         'menu_position' => 7,
-        'supports' => array('title','thumbnail')
+        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom-fields', 'page-attributes'),
+        'has_archive' => true
       );
 
     register_post_type( 'partner' , $args );
@@ -65,8 +70,8 @@ add_action( 'init', 'wds_op_create_custom_taxonomy', 0 );
 function wds_op_create_custom_taxonomy() {
     //Add new taxonomy, make it hierarchical (like categories)
     $labels = array(
-        'name'              => _x( 'Partner Categories', 'taxonomy general name' ),
-        'singular_name'     => _x( 'Partner Category', 'taxonomy singular name' ),
+        'name'              => _x( 'Partner Categories', 'Partner Categories', 'partner-categories' ),
+        'singular_name'     => _x( 'Partner Category', 'Partner Category', 'partner-category' ),
         'search_items'      => __( 'Search Categories' ),
         'all_items'         => __( 'All Categories' ),
         'parent_item'       => __( 'Parent Category' ),
@@ -93,6 +98,20 @@ function wds_op_create_custom_taxonomy() {
 
 
 
+function wds_op_change_title_text( $title ){
+     $screen = get_current_screen();
+
+     if  ( 'partner' == $screen->post_type ) {
+          $title = 'Enter partner name';
+     }
+
+     return $title;
+}
+
+add_filter( 'enter_title_here', 'wds_op_change_title_text' );
+
+
+
 //
 // Add Custom Data Fields to the add/edit post page
 //
@@ -112,12 +131,6 @@ function wds_op_add_fields() {
 // Field Array
 $prefix = 'custom_';
 $custom_meta_fields = array(
-    array(
-        'label'=> 'Description',
-        'desc'  => 'A description of the parnter.',
-        'id'    => $prefix.'description',
-        'type'  => 'textarea'
-    ),
     array(
         'label'=> 'Website',
         'desc'  => '',
@@ -149,11 +162,6 @@ wp_nonce_field( basename( __FILE__ ), 'partner_fields_nonce' );
                 <td>';
                 switch($field['type']) {
                     // case items will go here
-                    // textarea
-                    case 'textarea':
-                        echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.esc_textarea($meta).'</textarea>
-                            <br /><span class="description">'.$field['desc'].'</span>';
-                    break;
                     // url
                     case 'url':
                         echo '<input type="url" name="'.$field['id'].'" id="'.$field['id'].'" value="'.esc_url($meta).'" size="30" />
@@ -197,15 +205,6 @@ function wds_op_save_custom_meta($post_id) {
     foreach ($custom_meta_fields as $field) {
 
         switch ($field['id']) {
-            case 'custom_description':
-                $old = get_post_meta($post_id, $field['id'], true);
-                $new = sanitize_text_field($_POST[$field['id']]);
-                if ($new && $new != $old) {
-                    update_post_meta($post_id, $field['id'], $new);
-                } elseif ('' == $new && $old) {
-                    delete_post_meta($post_id, $field['id'], $old);
-                }
-                break;
             case 'custom_website':
                 $old = get_post_meta($post_id, $field['id'], true);
                 $new = esc_url($_POST[$field['id']]);
@@ -251,8 +250,7 @@ function wds_op_columns($columns) //this function display the columns headings
 {
     $columns = array(
         "cb" => '<input type="checkbox" />',
-        "title" => "Investment Title",
-        "description" => "Description",
+        "title" => "Name",
         "website" => "Website",
         "date" => "Date"
     );
@@ -263,11 +261,55 @@ function wds_op_custom_columns($column)
 {
     global $post;
     if ("ID" == $column) echo $post->ID; //displays title
-    elseif ("description" == $column) echo '<a href="">'.$post->custom_description.'</a>'; //displays the description
     elseif ("website" == $column) echo $post->custom_website; //shows up the post website.
 }
 
 
 
 
-?>
+
+
+/**
+ *
+ */
+
+add_filter( 'template_include', 'wds_op_include_template_function', 1 );
+
+function wds_op_include_template_function( $template_path ) {
+    if ( get_post_type() == 'partner' ) {
+        if ( is_single() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/single-partner.php';
+            }
+        }
+    }
+    if ( get_post_type() == 'partner' ) {
+        if ( is_archive() ) {
+            // checks if the file exists in the theme first,
+            // otherwise serve the file from the plugin
+            if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
+                $template_path = $theme_file;
+            } else {
+                $template_path = plugin_dir_path( __FILE__ ) . '/includes/archive-partner.php';
+            }
+        }
+    }
+    return $template_path;
+}
+
+
+/**
+ * Filter the except length to 20 characters.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ * @since 1.1.0
+ */
+function wds_op_custom_excerpt_length( $length ) {
+    return 25;
+}
+add_filter( 'excerpt_length', 'wds_op_custom_excerpt_length', 999 );
