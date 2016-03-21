@@ -1,8 +1,10 @@
 <?php
 /**
  * Page Template: 'Our Partners'
- * @package WOWDevShop
- * @subpackage OurPartners
+* @package WordPress
+* @subpackage WowDevShop_Our_Partners
+* @author XicoOfficial
+* @since 1.1.0
  */
 
 class PageTemplater {

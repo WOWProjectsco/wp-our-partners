@@ -9,8 +9,10 @@
  * new template file for each one. For example, tag.php (Tag archives),
  * category.php (Category archives), author.php (Author archives), etc.
  *
- * @package WOWDevShop
- * @subpackage OurPartners
+* @package WordPress
+* @subpackage WowDevShop_Our_Partners
+* @author XicoOfficial
+* @since 1.1.0
  */
 
 get_header(); ?>

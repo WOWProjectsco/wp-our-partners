@@ -3,9 +3,10 @@
  * Template Name: Partners
  *
  * Template for displaying the partners
- * @package WOWDevShop
- * @subpackage OurPartners
- * @since 1.1.0
+* @package WordPress
+* @subpackage WowDevShop_Our_Partners
+* @author XicoOfficial
+* @since 1.1.0
  */
 ?>
 <?php get_header(); ?>
