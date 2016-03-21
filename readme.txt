@@ -4,7 +4,7 @@ Donate link: http://wowdevshop.com/
 Tags: partners, company partners, partner category, widget, organization partners
 Requires at least: 3.8
 Tested up to: 4.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,7 @@ Installing "Our Partners by WOWDevShop" can be done either by searching for "Our
 = The plugin looks unstyled when I activate it. Why is this? =
 
 "Our Partners by WOWDevShop" is a lean plugin that aims to keep it's purpose as clean and clear as possible. Thus, we don't load any preset CSS styling, to allow full control over the styling within your theme or child theme.
+You can add a basic styling by coping and pasting the following code into your style.css on your theme. [css code](https://gist.github.com/xicoofficial/51fb6f8db3cf4e6ff461).
 
 = How do I contribute? =
 
@@ -81,6 +82,11 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Changelog ==
 
+= 1.1.1 =
+* Fix bugs for using the functions of twentysixteen theme :S
+* Add the email and website links to the single template
+* Remove support for custom fields
+
 = 1.1.0 =
 * Custom Archive template
 * Custom Single template
@@ -90,6 +96,8 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 * Add support for custom fields
 
 == Upgrade Notice ==
+= 1.1.1 =
+* Updating and fixing bugs
 
 = 1.1.0 =
 * IMPORTANT! The field 'description' on release v1.0.0 is replaced by the text editor on a default post type. Be sure tu have all your partner descriptions, otherwise you will lost them after the upgrade.
