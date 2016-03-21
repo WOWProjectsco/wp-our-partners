@@ -239,30 +239,6 @@ function wds_op_save_custom_meta($post_id) {
 
 
 
-//
-// Customize the columnts display
-//
-//
-add_action("manage_posts_custom_column", "wds_op_custom_columns");
-add_filter("manage_partner_posts_columns", "wds_op_columns");
-
-function wds_op_columns($columns) //this function display the columns headings
-{
-    $columns = array(
-        "cb" => '<input type="checkbox" />',
-        "title" => "Name",
-        "website" => "Website",
-        "date" => "Date"
-    );
-    return $columns;
-}
-
-function wds_op_custom_columns($column)
-{
-    global $post;
-    if ("ID" == $column) echo $post->ID; //displays title
-    elseif ("website" == $column) echo $post->custom_website; //shows up the post website.
-}
 
 
 
