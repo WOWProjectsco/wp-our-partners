@@ -81,9 +81,18 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Changelog ==
 
-No changelogs yet.
+= 1.1.0 =
+* Custom Archive template
+* Custom Single template
+* Custom General template
+* Add default partner logo when no picture is uploaded
+* Add support for page attributes: Parent and order
+* Add support for custom fields
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+* IMPORTANT! The field 'description' on release v1.0.0 is replaced by the text editor on a default post type. Be sure tu have all your partner descriptions, otherwise you will lost them after the upgrade.
 
 = 1.0.0 =
 * Initial release. Yeah!
