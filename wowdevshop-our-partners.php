@@ -17,12 +17,7 @@
 */
 
 
-/*
-|--------------------------------------------------------------------------
-| CONSTANTS
-|--------------------------------------------------------------------------
-*/
-
+require_once( 'pagetemplater.php' );
 
 
 //
@@ -58,9 +53,9 @@ function wds_op_create_post_type() {
         'menu_icon' => 'dashicons-nametag',
         'rewrite' => true,
         'capability_type' => 'post',
-        'hierarchical' => false,
+        'hierarchical' => true,
         'menu_position' => 7,
-        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom_fields', 'page_attributes'),
+        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom-fields', 'page-attributes'),
         'has_archive' => true
       );
 
@@ -278,9 +273,9 @@ function wds_op_custom_columns($column)
  *
  */
 
-add_filter( 'template_include', 'include_template_function', 1 );
+add_filter( 'template_include', 'wds_op_include_template_function', 1 );
 
-function include_template_function( $template_path ) {
+function wds_op_include_template_function( $template_path ) {
     if ( get_post_type() == 'partner' ) {
         if ( is_single() ) {
             // checks if the file exists in the theme first,
@@ -305,3 +300,16 @@ function include_template_function( $template_path ) {
     }
     return $template_path;
 }
+
+
+/**
+ * Filter the except length to 20 characters.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ * @since 1.1.0
+ */
+function wds_op_custom_excerpt_length( $length ) {
+    return 25;
+}
+add_filter( 'excerpt_length', 'wds_op_custom_excerpt_length', 999 );

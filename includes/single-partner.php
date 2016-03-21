@@ -2,6 +2,8 @@
 /**
  * The template for displaying all single posts and attachments
  *
+ * @package WOWDevShop
+ * @subpackage OurPartners
  */
 
 get_header(); ?>

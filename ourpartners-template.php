@@ -1,19 +1,14 @@
 <?php
 /**
- * The template for displaying archive pages
+ * Template Name: Partners
  *
- * Used to display archive-type pages if nothing more specific matches a query.
- * For example, puts together date-based pages if no date.php file exists.
- *
- * If you'd like to further customize these archive views, you may create a
- * new template file for each one. For example, tag.php (Tag archives),
- * category.php (Category archives), author.php (Author archives), etc.
- *
+ * Template for displaying the partners
  * @package WOWDevShop
  * @subpackage OurPartners
+ * @since 1.1.0
  */
-
-get_header(); ?>
+?>
+<?php get_header(); ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
@@ -31,7 +26,8 @@ get_header(); ?>
 		if ( have_posts() ) : ?>
 
 			<header class="page-header">
-				<div><h1>Our Partners</h1></div>
+				<div><h1><?php echo get_the_title($post); ?></h1></div>
+				<?php the_content(); ?>
 			</header><!-- .page-header -->
 		<div class="widget widget_wowdevshop_our_partners">
 			<div class="partners component partner_columns">
@@ -39,7 +35,7 @@ get_header(); ?>
 				// Start the Loop.
 				while ( have_posts() ) : the_post();
 
-					include( 'templates/content-archive.php');
+					include( 'includes/templates/content-archive.php');
 
 				// End the loop.
 				endwhile; ?>
