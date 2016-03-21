@@ -55,7 +55,7 @@ function wds_op_create_post_type() {
         'capability_type' => 'post',
         'hierarchical' => true,
         'menu_position' => 7,
-        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'custom-fields', 'page-attributes'),
+        'supports' => array('title', 'editor','thumbnail', 'excerpt', 'page-attributes'),
         'has_archive' => true
       );
 

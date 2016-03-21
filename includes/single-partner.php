@@ -19,20 +19,33 @@ get_header(); ?>
                     <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
                 </header><!-- .entry-header -->
 
-                <?php twentysixteen_excerpt(); ?>
-
-                <?php twentysixteen_post_thumbnail(); ?>
+                <?php the_post_thumbnail(); ?>
 
                 <div class="entry-content">
-                    <?php
-                        the_content();
 
+                    <?php the_content(); ?>
+
+                    <div class="entry-post-meta">
+                    <?php
+                        $custom_website = get_post_meta($post->ID, 'custom_website', true);
+                        $custom_email = get_post_meta($post->ID, 'custom_email', true);
+                        if($custom_website):
+                    ?>
+                            <span>Website: <a href="<?php echo $custom_website; ?>" target="_blank"><?php echo $custom_website; ?></a></span><br>
+                        <?php
+                        endif;
+                        if($custom_email) : ?>
+                            <span>Email: <a href="<?php echo 'mailto:' . $custom_email; ?>" target="_blank"><?php echo $custom_email; ?></a></span><br>
+                        <?php endif; ?>
+                        </div>
+
+                        <?php
                         wp_link_pages( array(
-                            'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:') . '</span>',
+                            'before'      => '<div class="page-links"><span class="page-links-title">' . 'Pages:' . '</span>',
                             'after'       => '</div>',
                             'link_before' => '<span>',
                             'link_after'  => '</span>',
-                            'pagelink'    => '<span class="screen-reader-text">' . __( 'Page') . ' </span>%',
+                            'pagelink'    => '<span class="screen-reader-text">' . 'Page' . ' </span>%',
                             'separator'   => '<span class="screen-reader-text">, </span>',
                         ) );
 
@@ -43,7 +56,6 @@ get_header(); ?>
                 </div><!-- .entry-content -->
 
                 <footer class="entry-footer">
-                    <?php twentysixteen_entry_meta(); ?>
                     <?php
                         edit_post_link(
                             sprintf(
@@ -73,11 +85,11 @@ get_header(); ?>
             } elseif ( is_singular( 'partner' ) ) {
                 // Previous/next post navigation.
                 the_post_navigation( array(
-                    'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'twentysixteen' ) . '</span> ' .
-                        '<span class="screen-reader-text">' . __( 'Next post:', 'twentysixteen' ) . '</span> ' .
+                    'next_text' => '<span class="meta-nav" aria-hidden="true">' . 'Next' . '</span> ' .
+                        '<span class="screen-reader-text">' . 'Next post:' . '</span> ' .
                         '<span class="post-title">%title</span>',
-                    'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'twentysixteen' ) . '</span> ' .
-                        '<span class="screen-reader-text">' . __( 'Previous post:', 'twentysixteen' ) . '</span> ' .
+                    'prev_text' => '<span class="meta-nav" aria-hidden="true">' . 'Previous' . '</span> ' .
+                        '<span class="screen-reader-text">' . 'Previous post:' . '</span> ' .
                         '<span class="post-title">%title</span>',
                 ) );
             }
