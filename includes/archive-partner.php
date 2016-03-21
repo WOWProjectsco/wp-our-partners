@@ -33,7 +33,7 @@ get_header(); ?>
 		if ( have_posts() ) : ?>
 
 			<header class="page-header">
-				<div><h1>Our Partners</h1></div>
+				<div><h1><?php echo __('Our Partners', 'our-partners-by-wowdevshop') ?></h1></div>
 			</header><!-- .page-header -->
 		<div class="widget widget_wowdevshop_our_partners">
 			<div class="partners component partner_columns">
@@ -52,9 +52,9 @@ get_header(); ?>
 
 			// Previous/next page navigation.
 			the_posts_pagination( array(
-				'prev_text'          => __( 'Previous page'),
-				'next_text'          => __( 'Next page'),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page') . ' </span>',
+				'prev_text'          => __( 'Previous page', 'our-partners-by-wowdevshop'),
+				'next_text'          => __( 'Next page', 'our-partners-by-wowdevshop'),
+				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'our-partners-by-wowdevshop') . ' </span>',
 			) );
 
 			// If no content, include the "No posts found" template.
