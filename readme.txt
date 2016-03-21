@@ -82,6 +82,10 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Changelog ==
 
+= 1.2.0 =
+* Plugin Internationalized
+* Bug Fixes
+
 = 1.1.1 =
 * Fix bugs for using the functions of twentysixteen theme :S
 * Add the email and website links to the single template
@@ -96,6 +100,10 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 * Add support for custom fields
 
 == Upgrade Notice ==
+
+=1.2.0=
+*Plugin Internationalized
+
 = 1.1.1 =
 * Updating and fixing bugs
 
