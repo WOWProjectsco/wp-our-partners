@@ -5,16 +5,28 @@
 * Plugin URI: http://wowdevshop.com
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.2.0
+* Version: 1.2.1
 * License: GPLv2
 * Author URI: http://wowdevshop.com
 * Text Domain: our-partners-by-wowdevshop
+* Domain Path: /languages/
 *
 * @package WordPress
 * @subpackage WowDevShop_Our_Partners
 * @author XicoOfficial
 * @since 1.0.0
 */
+
+
+
+/**
+ * Tell WordPress to load a translation file if it exists for the user's language
+ */
+function wds_op_load_plugin_textdomain() {
+    load_plugin_textdomain( 'our-partners-by-wowdevshop', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+add_action( 'plugins_loaded', 'wds_op_load_plugin_textdomain' );
 
 
 require_once( 'pagetemplater.php' );
@@ -285,3 +297,6 @@ function wds_op_custom_excerpt_length( $length ) {
     return 25;
 }
 add_filter( 'excerpt_length', 'wds_op_custom_excerpt_length', 999 );
+
+
+
