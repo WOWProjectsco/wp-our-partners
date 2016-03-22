@@ -7,7 +7,8 @@
  */
 
 get_header(); ?>
-
+<div id="layout" class="clearfix">
+<div class="pagewidth">
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
         <?php
@@ -83,15 +84,17 @@ get_header(); ?>
                 ) );
             } elseif ( is_singular( 'partner' ) ) {
                 // Previous/next post navigation.
-                the_post_navigation( array(
-                    'next_text' => '<span class="meta-nav" aria-hidden="true">' . __('Next', 'our-partners-by-wowdevshop') . '</span> ' .
-                        '<span class="screen-reader-text">' . __('Next post:', 'our-partners-by-wowdevshop') . '</span> ' .
-                        '<span class="post-title">%title</span>',
-                    'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __('Previous', 'our-partners-by-wowdevshop') . '</span> ' .
-                        '<span class="screen-reader-text">' . __('Previous post:', 'our-partners-by-wowdevshop') . '</span> ' .
-                        '<span class="post-title">%title</span>',
-                ) );
-            }
+?>
+                    <!-- post-nav -->
+                    <div class="post-nav clearfix">
+
+                        <?php previous_post_link('<span class="prev">%link</span>', '<span class="arrow">' . _x( '&laquo;', 'Previous entry link arrow', 'our-partners-by-wowdevshop') . '</span> %title') ?>
+
+                        <?php next_post_link('<span class="next">%link</span>', '<span class="arrow">' . _x( '&raquo;', 'Next entry link arrow', 'our-partners-by-wowdevshop') . '</span> %title') ?>
+
+                    </div><!-- /post-nav -->
+
+  <?php               }
 
             // End of the loop.
         endwhile;
@@ -102,6 +105,8 @@ get_header(); ?>
     <?php get_sidebar( 'content-bottom' ); ?>
 
 </div><!-- .content-area -->
+</div>
+</div>
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

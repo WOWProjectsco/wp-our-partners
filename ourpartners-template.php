@@ -11,6 +11,7 @@
 ?>
 <?php get_header(); ?>
 
+<div id="layout" class="pagewidth clearfix">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -61,5 +62,6 @@
 
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
+</div> <!--#layout -->
 
 <?php get_footer(); ?>
