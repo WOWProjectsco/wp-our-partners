@@ -81,6 +81,8 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 3. The organization partners posted.
 
 == Changelog ==
+= 1.2.2 =
+* Better html structure for more across theme compatibility.
 
 = 1.2.1 =
 * load a translation file if it exists for the user's language.
