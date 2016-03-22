@@ -88,9 +88,9 @@ get_header(); ?>
                     <!-- post-nav -->
                     <div class="post-nav clearfix">
 
-                        <?php previous_post_link('<span class="prev">%link</span>', '<span class="arrow">' . _x( '&laquo;', 'Previous entry link arrow', 'our-partners-by-wowdevshop') . '</span> %title') ?>
+                        <?php previous_post_link('<span class="prev">%link</span>', '<span class="arrow">' . __( '&laquo;','our-partners-by-wowdevshop') . '</span> %title') ?>
 
-                        <?php next_post_link('<span class="next">%link</span>', '<span class="arrow">' . _x( '&raquo;', 'Next entry link arrow', 'our-partners-by-wowdevshop') . '</span> %title') ?>
+                        <?php next_post_link('<span class="next">%link</span>', '<span class="arrow">' . __( '&raquo;', 'our-partners-by-wowdevshop') . '</span> %title') ?>
 
                     </div><!-- /post-nav -->
 
