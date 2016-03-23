@@ -4,7 +4,7 @@ Donate link: http://wowdevshop.com/
 Tags: partners, company partners, partner category, widget, organization partners
 Requires at least: 3.8
 Tested up to: 4.4
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 3. The organization partners posted.
 
 == Changelog ==
+= 1.3.0 =
+* Open each post on a lighbox istead of going to the full page.
+
+= 1.2.2 =
+* Better html structure for more across theme compatibility.
 
 = 1.2.1 =
 * load a translation file if it exists for the user's language.
