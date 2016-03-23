@@ -5,7 +5,7 @@
 * Plugin URI: http://wowdevshop.com
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.2.2
+* Version: 1.3.0
 * License: GPLv2
 * Author URI: http://wowdevshop.com
 * Text Domain: our-partners-by-wowdevshop
@@ -297,6 +297,19 @@ function wds_op_custom_excerpt_length( $length ) {
     return 25;
 }
 add_filter( 'excerpt_length', 'wds_op_custom_excerpt_length', 999 );
+
+
+/**
+ * Filter the excerpt "read more" string.
+ *
+ * @param string $more "Read more" excerpt string.
+ * @return string (Maybe) modified "read more" excerpt string.
+ * @since 1.3.0
+ */
+function wds_op_excerpt_more( $more ) {
+    return '...';
+}
+add_filter( 'excerpt_more', 'wds_op_excerpt_more', 20 );
 
 
 

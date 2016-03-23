@@ -27,7 +27,7 @@ get_header(); ?>
                     <?php the_content(); ?>
 
                     <div class="entry-post-meta">
-                    <?php
+                        <?php
                         $custom_website = get_post_meta($post->ID, 'custom_website', true);
                         $custom_email = get_post_meta($post->ID, 'custom_email', true);
                         if($custom_website):
@@ -37,7 +37,7 @@ get_header(); ?>
 
                             echo "<span>" . __('Email:', 'our-partners-by-wowdevshop') . " <a href='mailto:" . $custom_email. "' target='_blank'>" . $custom_email . "</a></span><br>";
                         endif; ?>
-                        </div>
+                    </div>
 
                         <?php
                         wp_link_pages( array(
