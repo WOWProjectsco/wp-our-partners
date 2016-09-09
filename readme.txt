@@ -1,10 +1,10 @@
-=== Our Partners by WOWDevShop ===
-Contributors: XicoOfficial, wowdevshop
-Donate link: http://wowdevshop.com/
+=== Our Partners by WOWProjects ===
+Contributors: XicoOfficial, wowprojectsco
+Donate link: http://wowprojects.co/
 Tags: partners, company partners, partner category, widget, organization partners
 Requires at least: 3.8
-Tested up to: 4.4
-Stable tag: 1.3.0
+Tested up to: 4.6
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ This plugin registers the 'partner' post type, it let's you manage your company 
 
 = Organization Partners Management =
 
-"Our Partners by WOWDevShop" is a clean and easy-to-use organization partners management system for WordPress. Load in your partners and display them on a page as posts, with their own categories.
+"Our Partners by WOWProjects" is a clean and easy-to-use organization partners management system for WordPress. Load in your partners and display them on a page as posts, with their own categories.
 
 = Support =
 
@@ -22,7 +22,7 @@ Looking for a helping hand? [View plugin documentation](http://docs.wowdevshop.c
 
 = Get Involved =
 
-Looking to contribute code to this plugin? Go ahead and [fork the repository over at GitHub](https://github.com/wowdevshop/wp-our-partners).
+Looking to contribute code to this plugin? Go ahead and [fork the repository over at GitHub](https://github.com/wowprojectsco/wp-our-partners).
 (submit pull requests to the latest "release-" tag)
 
 == Usage ==
@@ -55,7 +55,7 @@ while ( $loop->have_posts() ) : $loop->the_post();
 
 == Installation ==
 
-Installing "Our Partners by WOWDevShop" can be done either by searching for "Our Partners by WOWDevShop" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "Our Partners by WOWProjects" can be done either by searching for "Our Partners by WOWProjects" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org.
 1. Upload the ZIP file through the "Plugins > Add New > Upload" screen in your WordPress dashboard.
@@ -65,12 +65,12 @@ Installing "Our Partners by WOWDevShop" can be done either by searching for "Our
 
 = The plugin looks unstyled when I activate it. Why is this? =
 
-"Our Partners by WOWDevShop" is a lean plugin that aims to keep it's purpose as clean and clear as possible. Thus, we don't load any preset CSS styling, to allow full control over the styling within your theme or child theme.
+"Our Partners by WOWProjects" is a lean plugin that aims to keep it's purpose as clean and clear as possible. Thus, we don't load any preset CSS styling, to allow full control over the styling within your theme or child theme.
 You can add a basic styling by coping and pasting the following code into your style.css on your theme. [css code](https://gist.github.com/xicoofficial/51fb6f8db3cf4e6ff461).
 
 = How do I contribute? =
 
-We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](https://github.com/wowdevshop/wp-our-partners).
+We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](https://github.com/wowprojectsco/wp-our-partners).
 
 == Screenshots ==
 
@@ -81,6 +81,10 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 3. The organization partners posted.
 
 == Changelog ==
+= 1.3.1 =
+* compatibility with WordPress 4.6.
+* Change WOWDevShop for WOWProjects, the name of the company behind the plugin.
+
 = 1.3.0 =
 * Open each post on a lighbox istead of going to the full page.
 
