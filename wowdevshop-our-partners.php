@@ -2,17 +2,17 @@
 
 /**
 * Plugin Name: Our Partners
-* Plugin URI: http://wowdevshop.com
+* Plugin URI: http://wowprojects.co
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
 * Version: 1.3.0
 * License: GPLv2
-* Author URI: http://wowdevshop.com
+* Author URI: http://wowprojects.co
 * Text Domain: our-partners-by-wowdevshop
 * Domain Path: /languages/
 *
 * @package WordPress
-* @subpackage WowDevShop_Our_Partners
+* @subpackage WOWProjects_Our_Partners
 * @author XicoOfficial
 * @since 1.0.0
 */
@@ -275,7 +275,7 @@ function wds_op_include_template_function( $template_path ) {
         if ( is_archive() ) {
             // checks if the file exists in the theme first,
             // otherwise serve the file from the plugin
-            if ( $theme_file = locate_template( array ( 'single-partner.php' ) ) ) {
+            if ( $theme_file = locate_template( array ( 'archive-partner.php' ) ) ) {
                 $template_path = $theme_file;
             } else {
                 $template_path = plugin_dir_path( __FILE__ ) . '/includes/archive-partner.php';

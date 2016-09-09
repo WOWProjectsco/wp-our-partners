@@ -2,8 +2,8 @@
 /**
  * The template part for displaying single posts
  *
- * @package WOWDevShop
- * @subpackage OurPartners
+ * @package WordPress
+ * @subpackage WOWProjects_Our_Partners
  * @since 1.3.0
  **/
 ?>

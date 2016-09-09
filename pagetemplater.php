@@ -2,7 +2,7 @@
 /**
  * Page Template: 'Our Partners'
 * @package WordPress
-* @subpackage WowDevShop_Our_Partners
+* @subpackage WOWProjects_Our_Partners
 * @author XicoOfficial
 * @since 1.1.0
  */
