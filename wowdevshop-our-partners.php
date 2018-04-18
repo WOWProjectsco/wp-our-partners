@@ -5,7 +5,7 @@
 * Plugin URI: http://wowprojects.co
 * Description: This plugin registers the 'partner' post type, it let's you manage your company partner profiles.
 * Author: XicoOfficial
-* Version: 1.3.1
+* Version: 1.3.2
 * License: GPLv2
 * Author URI: http://wowprojects.co
 * Text Domain: our-partners-by-wowdevshop

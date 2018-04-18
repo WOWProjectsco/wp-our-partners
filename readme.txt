@@ -3,8 +3,8 @@ Contributors: XicoOfficial, wowprojectsco
 Donate link: http://wowprojects.co/
 Tags: partners, company partners, partner category, widget, organization partners
 Requires at least: 3.8
-Tested up to: 4.6
-Stable tag: 1.3.1
+Tested up to: 4.9
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,9 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 3. The organization partners posted.
 
 == Changelog ==
+= 1.3.2 =
+* Test compatibility with WordPress 4.9.
+
 = 1.3.1 =
 * compatibility with WordPress 4.6.
 * Change WOWDevShop for WOWProjects, the name of the company behind the plugin.
@@ -112,6 +115,7 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 * Add support for custom fields
 
 == Upgrade Notice ==
+
 = 1.2.1 =
 * load a translation file if it exists for the user's language.
 
